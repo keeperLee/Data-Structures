@@ -65,17 +65,67 @@ public class Array {
     //获取index索引位置的元素
     int get(int index){
         if(index < 0 || index >= size){
-            throw new IllegalArgumentException("元素获取失败，索引不服和要求");
+            throw new IllegalArgumentException("元素获取失败，索引不符和要求");
         }
         return data[index];
     }
     //修改index索引位置的元素为e
     void  set(int index,int e){
         if(index < 0 || index >= size){
-            throw new IllegalArgumentException("元素获取失败，索引不服和要求");
+            throw new IllegalArgumentException("元素获取失败，索引不符和要求");
         }
         data[index] = e;
     }
+
+    //查找数组中是否有元素e
+    public boolean contains(int e){
+        for (int i = 0; i < size ; i++) {
+            if(data[i] == e)
+                return true;
+        }
+        return false;
+    }
+
+    //查找数组中元素e所在的索引，如果不存在元素，则返回-1；
+    public int find(int e){
+        for (int i = 0; i < size ; i++) {
+            if(data[i] == e)
+                return i;
+        }
+        return -1;
+    }
+    //从数组中删除index位置的元素，返回删除的元素
+    public int remove(int index){
+        if(index < 0 || index >= size){
+            throw new IllegalArgumentException("元素删除失败，索引不符和要求");
+        }
+        int ret = data[index];
+        for(int i = index + 1 ; i < size ; i ++){
+            data[i - 1] = data[i];
+        }
+        size -- ;
+        return ret;
+    }
+
+    //从数组中删除第一个元素，返回删除的元素
+    public int removeFirst(){
+        return remove(0);
+    }
+
+    //从数组中删除最后一个元素，返回删除的元素
+    public int removeLast(){
+        return remove(size - 1);
+    }
+
+    //从数组中删除元素e.如果数组中有多个重复的e元素，则此方法只能删除一个
+    public void removeElement(int e){
+        int index = find(e);
+        if(index != -1){
+            remove(index);
+        }
+    }
+
+
 
     @Override
     public String toString(){
