@@ -49,11 +49,13 @@ public class Array<E> {
 
     //在第index个位置插入一个新元素e
     public void add(int index , E e){
-        if (size == data.length) {
-            throw new IllegalArgumentException("添加失败，数组已满！");
-        }
+
         if( index <  0 || index > size){
             throw new IllegalArgumentException("添加失败，索引值不符合要求！");
+        }
+        if (size == data.length) {
+           //扩容数组的容量
+            resize(2*data.length);
         }
         for(int i = size - 1 ; i >= index ; i -- ){
             data[i+1] = data[i];
@@ -62,6 +64,7 @@ public class Array<E> {
         size ++;
 
     }
+
     //获取index索引位置的元素
     public E get(int index){
         if(index < 0 || index >= size){
@@ -105,6 +108,10 @@ public class Array<E> {
         }
         size -- ;
         data[size] = null; //loitering objects ,闲置的对象
+
+        if(size == data.length / 2){
+            resize(data.length/2);
+        }
         return ret;
     }
 
@@ -124,6 +131,14 @@ public class Array<E> {
         if(index != -1){
             remove(index);
         }
+    }
+
+    private void resize(int newCapacity) {
+        E[] newData = (E[])new Object[newCapacity];
+        for(int i = 0 ; i < size ; i++){
+            newData[i] = data[i];
+        }
+        data = newData;
     }
 
 
