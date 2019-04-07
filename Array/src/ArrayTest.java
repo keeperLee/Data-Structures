@@ -21,7 +21,7 @@ public class ArrayTest {
         arr.remove(2);
         System.out.println(arr);
 
-        arr.remove(4);
+        arr.removeElement(4);
         System.out.println(arr);
 
         arr.removeFirst();
@@ -29,6 +29,34 @@ public class ArrayTest {
 
         arr.removeLast();
         System.out.println(arr);
+
+        //--------------------------------------------使用泛型的测试如下--------------------------------------//
+        System.out.println("泛型测试如下：");
+        Array<Integer> arr2 = new Array<Integer>(20);
+        //添加方法的测试如下：
+        for(int i = 0 ; i < 10 ; i ++){
+            arr2.addLast(i);
+        }
+        System.out.println(arr2);
+
+        arr2.add(1,100);
+        System.out.println(arr2);
+
+        arr2.addFirst(-1);
+        System.out.println(arr2);
+
+        //删除方法的测试如下：
+        arr2.remove(2);
+        System.out.println(arr2);
+
+        arr2.removeElement(4);
+        System.out.println(arr2);
+
+        arr2.removeFirst();
+        System.out.println(arr2);
+
+        arr2.removeLast();
+        System.out.println(arr2);
     }
 
 }

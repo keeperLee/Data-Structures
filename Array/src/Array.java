@@ -1,15 +1,15 @@
 /**
  * 自己定义的的数组类
  */
-public class Array {
+public class Array<E> {
 
-    private int[] data;
+    private E[] data;
     //数组的实际元素个数
     private int size;
 
     //构造函数，传入数组的容量capacity构造Array
     public Array(int capacity){
-        data = new int[capacity];
+        data = (E[]) new Object[capacity];
         size = 0;
     }
     //无参数的构造函数，默认数组的容量capacity=10
@@ -33,7 +33,7 @@ public class Array {
     }
 
     //向所有元素后添加一个新的元素
-    public void addLast(int e){
+    public void addLast(E e){
       /*  if (size == data.length) {
             throw new IllegalArgumentException("添加失败，数组已满！");
         }
@@ -43,12 +43,12 @@ public class Array {
         add(size,e);
     }
     //在所有元素前添加一个新元素
-    public void addFirst(int e){
+    public void addFirst(E e){
         add(0,e);
     }
 
     //在第index个位置插入一个新元素e
-    public void add(int index , int e){
+    public void add(int index , E e){
         if (size == data.length) {
             throw new IllegalArgumentException("添加失败，数组已满！");
         }
@@ -63,14 +63,14 @@ public class Array {
 
     }
     //获取index索引位置的元素
-    int get(int index){
+    public E get(int index){
         if(index < 0 || index >= size){
             throw new IllegalArgumentException("元素获取失败，索引不符和要求");
         }
         return data[index];
     }
     //修改index索引位置的元素为e
-    void  set(int index,int e){
+    public void  set(int index,E e){
         if(index < 0 || index >= size){
             throw new IllegalArgumentException("元素获取失败，索引不符和要求");
         }
@@ -78,47 +78,48 @@ public class Array {
     }
 
     //查找数组中是否有元素e
-    public boolean contains(int e){
+    public boolean contains(E e){
         for (int i = 0; i < size ; i++) {
-            if(data[i] == e)
+            if(data[i].equals(e))
                 return true;
         }
         return false;
     }
 
     //查找数组中元素e所在的索引，如果不存在元素，则返回-1；
-    public int find(int e){
+    public int find(E e){
         for (int i = 0; i < size ; i++) {
-            if(data[i] == e)
+            if(data[i].equals(e))
                 return i;
         }
         return -1;
     }
     //从数组中删除index位置的元素，返回删除的元素
-    public int remove(int index){
+    public E remove(int index){
         if(index < 0 || index >= size){
             throw new IllegalArgumentException("元素删除失败，索引不符和要求");
         }
-        int ret = data[index];
+        E ret = data[index];
         for(int i = index + 1 ; i < size ; i ++){
             data[i - 1] = data[i];
         }
         size -- ;
+        data[size] = null; //loitering objects ,闲置的对象
         return ret;
     }
 
     //从数组中删除第一个元素，返回删除的元素
-    public int removeFirst(){
+    public E removeFirst(){
         return remove(0);
     }
 
     //从数组中删除最后一个元素，返回删除的元素
-    public int removeLast(){
+    public E removeLast(){
         return remove(size - 1);
     }
 
     //从数组中删除元素e.如果数组中有多个重复的e元素，则此方法只能删除一个
-    public void removeElement(int e){
+    public void removeElement(E e){
         int index = find(e);
         if(index != -1){
             remove(index);
