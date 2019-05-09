@@ -87,6 +87,65 @@ public class BST<E extends Comparable<E>> {
             node.right = add(node.right,e);
         }
         return node;
+    }
 
+    //看二分搜索树中是否包含元素e
+    public boolean contains(E e){
+        return contains(root ,e);
+    }
+
+    //看以node为根的二分搜索树中是否包含元素e,递归算法
+    private boolean contains(Node node , E e){
+        //终止情况
+        if(node == null){
+            return false;
+        }
+
+        if(e.compareTo(node.e) == 0){
+            return true;
+        }else if(e.compareTo(node.e) < 0){
+           return contains(node.left,e);
+        }else{
+            return contains(node.right,e);
+        }
+    }
+
+    //二分搜索树的前序遍历
+    public void preOrder(){
+        preOrder(root);
+    }
+
+    private void preOrder(Node node){
+        if(node == null)
+            return ;
+        System.out.println(node.e);
+        preOrder(node.left);
+        preOrder(node.right);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder();
+        generateBSTString(root, 0  ,res);
+        return res.toString();
+    }
+
+    //生成以node为根节点，深度为depth的描述二叉树的字符串
+    private void generateBSTString(Node node, int depth, StringBuilder res){
+        if(node == null){
+            res.append(generateDepthString(depth) + "null\n");
+            return;
+        }
+        res.append(generateDepthString(depth) + node.e + "\n");
+        generateBSTString(node.left,depth + 1,res);
+        generateBSTString(node.right,depth + 1,res);
+    }
+
+    private String generateDepthString(int depth) {
+        StringBuilder res = new StringBuilder();
+        for(int i = 0 ; i< depth ; i ++){
+            res.append("--");
+        }
+        return res.toString();
     }
 }
