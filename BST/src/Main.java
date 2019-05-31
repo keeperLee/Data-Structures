@@ -14,10 +14,18 @@ public class Main {
         //   /  \     \  //
         //  2   4     8  //
         //////////////////
-        bst.preOrder();
+        bst.levelOrder();
+//        bst.preOrder();
+//        System.out.println();
+//
+//        bst.preOrderNR();
+//        System.out.println();
+//        bst.inOrder();
+//        System.out.println();
+//
+//        bst.postOrder();
+//        System.out.println();
 
-        System.out.println();
-
-        System.out.println(bst);
+//        System.out.println(bst);
     }
 }
