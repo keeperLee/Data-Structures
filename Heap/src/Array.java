@@ -149,7 +149,14 @@ public class Array<E> {
         return get(0);
     }
 
-
+    public void swap(int i  , int j){
+        if( i < 0 || i >= size || j < 0 || j>= size){
+            throw new IllegalArgumentException("下标不合法!");
+        }
+        E t = data[i];
+        data[i] = data[j];
+        data[j] = data[i];
+    }
 
     @Override
     public String toString(){

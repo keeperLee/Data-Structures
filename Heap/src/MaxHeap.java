@@ -37,4 +37,19 @@ public class MaxHeap<E  extends Comparable<E>>{
     public int rightChild(int index){
         return  index *  2 + 2;
     }
+
+    //向堆中添加元素
+    public void add(E e){
+        data.addLast(e);
+        //将最后一个添加进数组的元素进行判断是否要进行上浮操作
+        siftUp(data.getSize()-1);
+    }
+
+    private void siftUp(int k){
+        //把当前节点与父亲节点进行比较
+        while ( k > 0 && data.get(parent(k)).compareTo(data.get(k)) < 0){
+            data.swap(k,parent(k));
+            k = parent(k);
+        }
+    }
 }
