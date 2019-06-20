@@ -10,6 +10,13 @@ public class MaxHeap<E  extends Comparable<E>>{
         data = new Array<E>();
     }
 
+    public MaxHeap(E[] arr){
+        data = new Array<E>(arr);
+        for (int i = parent(arr.length - 1); i >= 0 ; i --){
+            siftDown(i);
+        }
+    }
+
     //返回堆中的个数
     public int size(){
         return data.getSize();
@@ -51,5 +58,46 @@ public class MaxHeap<E  extends Comparable<E>>{
             data.swap(k,parent(k));
             k = parent(k);
         }
+    }
+
+    //看堆中的最大元素
+    public E findMax(){
+        if(data.getSize() == 0){
+            throw new IllegalArgumentException("数组为空，无法找到元素");
+        }
+        return data.get(0);
+    }
+
+    //取出堆中最大元素
+    public E extractMax(){
+        E ret = findMax();
+        data.swap(0,data.getSize() - 1);
+        data.removeLast();
+        siftDown(0);
+        return ret;
+    }
+
+    private void siftDown(int k ) {
+        while ( leftChild(k) <data.getSize()){
+            int j = leftChild(k);
+            if( j + 1 <data.getSize() && data.get(j+1).compareTo(data.get(j))>0){
+                j = rightChild(k);
+            }
+            if(data.get(k).compareTo(data.get(j)) >= 0 ){
+                break;
+            }
+            data.swap(k,j);
+            k = j;
+
+        }
+
+    }
+
+    //取出堆中的最大元素，并且替换成元素e
+    public E replace(E e){
+        E ret = findMax();
+        data.set(0,e);
+        siftDown(0);
+        return ret;
     }
 }
