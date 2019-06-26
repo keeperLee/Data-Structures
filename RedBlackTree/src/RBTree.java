@@ -2,16 +2,21 @@ import java.util.ArrayList;
 
 public class RBTree<K extends Comparable<K>, V> {
 
+    private static final boolean RED = true;
+    private static final boolean BLACK = false;
+
     private class Node{
         public K key;
         public V value;
         public Node left, right;
+        public boolean color;
 
         public Node(K key, V value){
             this.key = key;
             this.value = value;
             left = null;
             right = null;
+            color = RED;
         }
     }
 
@@ -31,13 +36,39 @@ public class RBTree<K extends Comparable<K>, V> {
         return size == 0;
     }
 
-    // 向二分搜索树中添加新的元素(key, value)
-    public void add(K key, V value){
-        root = add(root, key, value);
+    //判断node节点的颜色
+    private boolean isRed(Node node){
+        if(node == null){
+            return BLACK;
+        }
+        return node.color;
     }
 
-    // 向以node为根的二分搜索树中插入元素(key, value)，递归算法
-    // 返回插入新节点后二分搜索树的根
+    //   node                     x
+    //  /   \     左旋转         /  \
+    // T1   x   --------->   node   T3
+    //     / \              /   \
+    //    T2 T3            T1   T2
+    private Node leftRotate(Node node){
+        Node x = node.right;
+
+        //左旋转
+        node.right = x.left;
+        x.left = node;
+
+        x.color = node.color;
+        node.color =  RED;
+        return x;
+    }
+
+    // 向红黑树中添加新的元素(key, value)
+    public void add(K key, V value){
+        root = add(root, key, value);
+        root.color = BLACK;  //最终节点为黑色节点
+    }
+
+    // 向以node为根的红黑树中插入元素(key, value)，递归算法
+    // 返回插入新节点后红黑树的根
     private Node add(Node node, K key, V value){
 
         if(node == null){
